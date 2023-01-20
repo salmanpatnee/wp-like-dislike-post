@@ -2,6 +2,14 @@ jQuery(document).ready(function ($) {
   jQuery("button.spld-btn").click(function (e) {
     e.preventDefault();
 
+    var response_div = $("#spld_ajax_response");
+    response_div.html("");
+    
+    if(data.user_id === "0"){
+      response_div.html("<a href='"+data.login_url+"'>Login</a> to send your feedback.");
+      return;
+    }
+
     var $this = $(this);
     $this.prop("disabled", true);
     var count_span = $this.find(".count");
@@ -23,15 +31,15 @@ jQuery(document).ready(function ($) {
       success: function (response) {
         if (response.type == "success") {
           if (type === "like") {
-            $this.addClass("is-liked");
+            $this.addClass("active");
 
             //Increment like count.
             increment_count(count_span);
 
-            dislike_btn.removeClass("is-disliked").prop("disabled", false);
-            
-            // Enable button end decrement dislike count.
             var dislike_btn = $(".spld-dislike-btn");
+
+            // Enable button end decrement dislike count.
+            dislike_btn.removeClass("active").prop("disabled", false);
             var dislike_count_span = dislike_btn.find(".count");
             
 
@@ -42,7 +50,7 @@ jQuery(document).ready(function ($) {
               dislike_count_span.text(dislike_count - 1);
             }
           } else {
-            $this.addClass("is-disliked");
+            $this.addClass("active");
 
             //Increment dislike count.
             increment_count(count_span);
@@ -50,7 +58,7 @@ jQuery(document).ready(function ($) {
             // Enable button end decrement like count.
             var like_btn = $(".spld-like-btn");
             var like_count_span = like_btn.find(".count");
-            like_btn.removeClass("is-liked").prop("disabled", false);
+            like_btn.removeClass("active").prop("disabled", false);
 
             var like_count = parseInt(like_count_span.text());
 
@@ -60,9 +68,9 @@ jQuery(document).ready(function ($) {
             }
           }
         } else {
-          alert("Something went wrong.");
+          // alert("Something went wrong.");
         }
-        $("#spld_ajax_response").html(response.message);
+        response_div.html(response.message);
       },
     });
   });
