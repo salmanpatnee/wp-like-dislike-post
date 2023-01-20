@@ -1,0 +1,47 @@
+.spld_like_dislike_wrap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.spld-btn {
+    display: inline-block;
+    width: 45%;
+    padding: 20px;
+    font-size: 20px;
+    margin: 0 2%;
+    border: 1px solid #ccc;
+    text-align: center;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #444;
+    transition: 0.5s all;
+    cursor: pointer;
+}
+.spld-like-btn:hover, 
+.spld-dislike-btn:hover, 
+.spld-btn.active, 
+.spld-btn.active {
+    color: #fff;
+}
+
+.spld-like-btn:hover, 
+.spld-like-btn.active{
+    background-color: #6CBC72;
+}
+.spld-dislike-btn:hover, 
+.spld-dislike-btn.active{
+    background-color: #EC6D70;
+}
+.spld_ajax_response {
+    text-align: center;
+    margin: 1em auto;
+    color: #6CBC72;
+    width: 80%;
+    padding: .5em;
+    font-weight: bold;
+}
+.spld-btn.active, 
+.spld-btn.active{
+    pointer-events: none;
+    cursor: not-allowed;
+}
