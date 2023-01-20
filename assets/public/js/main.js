@@ -4,14 +4,16 @@ jQuery(document).ready(function ($) {
 
     var response_div = $("#spld_ajax_response");
     response_div.html("");
-    
-    if(data.user_id === "0"){
-      response_div.html("<a href='"+data.login_url+"'>Login</a> to send your feedback.");
+
+    if (data.user_id === "0") {
+      response_div.html(
+        "<a href='" + data.login_url + "'>Login</a> to send your feedback."
+      );
       return;
     }
 
     var $this = $(this);
-    $this.prop("disabled", true);
+    $this.prop("disabled", true).addClass("is-processing");
     var count_span = $this.find(".count");
 
     post_id = $(this).attr("data-post_id");
@@ -31,7 +33,7 @@ jQuery(document).ready(function ($) {
       success: function (response) {
         if (response.type == "success") {
           if (type === "like") {
-            $this.addClass("active");
+            $this.addClass("active").removeClass("is-processing");
 
             //Increment like count.
             increment_count(count_span);
@@ -41,7 +43,6 @@ jQuery(document).ready(function ($) {
             // Enable button end decrement dislike count.
             dislike_btn.removeClass("active").prop("disabled", false);
             var dislike_count_span = dislike_btn.find(".count");
-            
 
             var dislike_count = parseInt(dislike_count_span.text());
 
@@ -50,7 +51,7 @@ jQuery(document).ready(function ($) {
               dislike_count_span.text(dislike_count - 1);
             }
           } else {
-            $this.addClass("active");
+            $this.addClass("active").removeClass("is-processing");
 
             //Increment dislike count.
             increment_count(count_span);
