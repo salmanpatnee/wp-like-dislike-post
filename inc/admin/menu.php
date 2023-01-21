@@ -1,7 +1,7 @@
 <?php
 
-if (!function_exists('wpld_register_menu_page')) {
-    function wpld_register_menu_page()
+if (!function_exists('spld_register_menu_page')) {
+    function spld_register_menu_page()
     {
         add_menu_page('SP Like Dislike', 'SP Like Dislike', 'manage_options', 'spld-settings', 'spld_settings_page_callback', 'dashicons-thumbs-up', 30);
     }

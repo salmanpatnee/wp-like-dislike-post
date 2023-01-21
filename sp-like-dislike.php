@@ -43,7 +43,7 @@ require SPLD_PLUGIN_DIR . '/inc/process/like_dislike.php';
 // Hooks
 register_activation_hook(__FILE__, 'spld_activation');
 add_action('wp_enqueue_scripts', 'spld_enqueue_scripts');
-add_action('admin_menu', 'wpld_register_menu_page');
+add_action('admin_menu', 'spld_register_menu_page');
 add_action('admin_init', 'spld_register_settings');
 add_filter('the_content', 'spld_add_like_dislike_btns');
 add_action('wp_ajax_spld_handle_like_dislike', 'spld_handle_like_dislike');
