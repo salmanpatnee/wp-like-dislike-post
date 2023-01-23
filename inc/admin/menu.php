@@ -19,6 +19,7 @@ function spld_settings_page_callback()
         <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
         <form action="options.php" method="POST">
             <?php
+            settings_errors();
             settings_fields('spld-settings');
             do_settings_sections('spld-settings');
             submit_button('Save');
