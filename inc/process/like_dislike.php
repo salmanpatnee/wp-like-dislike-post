@@ -3,8 +3,6 @@ function spld_handle_like_dislike()
 {
     $response = ['type' => 'error'];
 
-    global $wpdb;
-
     $type    = $_POST['type'];
     $post_id = $_POST['post_id'];
     $user_id = get_current_user_id();
@@ -26,12 +24,14 @@ function spld_handle_like_dislike()
 
                     // QUERY: Checking if this post disliked by the current user.
                     $check_dislike = spld_check_like_dislike_by_user($user_id, $post_id, 'dislike');
-
+                    $is_liked = false;
                     // If dislike then revert it.
                     if ($check_dislike > 0) {
                         $is_reverted = spld_revert_like_dislike($type, $user_id, $post_id);
                     } else {
                         $is_liked = spld_like_it($user_id, $post_id);
+                        print_r($is_liked);
+                        exit();
                     }
 
                     if ($is_reverted || $is_liked) {
@@ -45,6 +45,7 @@ function spld_handle_like_dislike()
                 } else {
 
                     $check_like = spld_check_like_dislike_by_user($user_id, $post_id, 'like');
+                    $is_disliked = false;
 
                     if ($check_like > 0) {
 
@@ -106,19 +107,24 @@ function spld_revert_like_dislike($type, $user_id, $post_id)
 
 function spld_like_it($user_id, $post_id)
 {
+
     global $wpdb;
 
-    return $wpdb->insert(
+
+    $inserted = $wpdb->insert(
         SPLD_TABLE_NAME,
         array(
             'user_id' => $user_id,
             'post_id'   => $post_id,
-            'like'  => 1
+            'like'  => 1,
         ),
         array(
             '%d', '%d', '%d'
         )
     );
+
+    print_r($inserted);
+    exit();
 }
 
 function spld_disspld_like_it($user_id, $post_id)
@@ -127,8 +133,9 @@ function spld_disspld_like_it($user_id, $post_id)
     $wpdb->insert(SPLD_TABLE_NAME, array(
         'user_id' => $user_id,
         'post_id'   => $post_id,
-        'dislike'  => 1
+        'dislike'  => 1,
+        'created_at' => current_time('mysql')
     ), array(
-        '%d', '%d', '%d'
+        '%d', '%d', '%d, %s'
     ));
 }
